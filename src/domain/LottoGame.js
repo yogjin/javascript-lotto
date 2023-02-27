@@ -11,21 +11,6 @@ export class LottoGame {
     this.view = view;
   }
 
-  async play() {
-    const purchaseAmount = Number(await this.view.readPurchaseAmount());
-    this.lottoPurchase(purchaseAmount);
-    this.showLottos();
-
-    const winningLottoNumbers = (await this.view.readWinningLottoNumbers()).split(",").map(Number);
-    this.setWinningLotto(
-      winningLottoNumbers,
-      Number(await this.view.readBonusNumber(winningLottoNumbers))
-    );
-    this.showStatistics(purchaseAmount);
-
-    this.restart(await this.view.readRestartOrQuit());
-  }
-
   lottoPurchase(purchaseAmount) {
     const numberOfPurchasedLottos = purchaseAmount / LOTTO_PRICE;
     this.#setLottos(numberOfPurchasedLottos);
